@@ -61,4 +61,6 @@ if response.status_code == 200:
                 print("Ha ocurrido un error o no hay issues en este momento")
         except : 
             print("Error escribiendo el fichero:Resueltas.csv")
-
+else:
+    print("Error al conectar a la URL: " + JQL_PATH + 
+          "\nError Code: " + str(response.status_code))
