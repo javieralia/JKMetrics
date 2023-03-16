@@ -1,20 +1,30 @@
 import json
+import os
 import time
 import requests
 import sys
 import csv
 import datetime
 
-JQL_PATH = "https://axinic.central.inditex.grp/jira/rest/api/2/search"
-user=""
-password=""
+# JQL_PATH = "https://axinic.central.inditex.grp/jira/rest/api/2/search"
+CONFIG_FILE = os.path.realpath("./config.txt")
+in_config_file = open (CONFIG_FILE, 'r')
+lines = in_config_file.readlines()
+if len(lines) != 4:
+    sys.exit("Wrong credentials file. Expected 4 lines (0 -> user, 1-> password, 2-> url, 3-> jql)")
+            
+user= lines[0].strip()
+password= lines[1].strip()
+JQL_PATH = lines[2].strip()
+jql = lines[3].strip()
+
 header_params = {"Content-Type": "application/json"}
 header = ['Tipo de incidencia','Tipo de Trabajo','Clase de Servicio','Estado', 'Clave de Incidencia', 'ID de Incidencia', 'Creada', 'Actualizada', 'Fecha Inicio Escalado', 'Fecha Fin Escalado', 'Transportista','Resuelta']
 
 
 # Cerradas
 
-jql= "project = <proyecto> AND 'Equipo Asignado' = jsdsoportetrackingtec and status in (Done,Cerrado,Closed,Resolved) and (Resolved >= startOfMonth(-12) AND resolved <= endOfMonth(-12))"
+# jql= "project = <proyecto> AND 'Equipo Asignado' = jsdsoportetrackingtec and status in (Done,Cerrado,Closed,Resolved) and (Resolved >= startOfMonth(-12) AND resolved <= endOfMonth(-12))"
 query_params = {'jql': jql, 'startAt': 0, 'maxResults': 1000, 'expand' :'changelog'}
 
 response = requests.get(url=JQL_PATH, headers=header_params, params=query_params, verify=False,
