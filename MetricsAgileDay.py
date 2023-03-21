@@ -20,10 +20,6 @@ jql = lines[3].strip()
 header_params = {"Content-Type": "application/json"}
 header = ['Tipo de incidencia','Tipo de Trabajo','Clase de Servicio','Estado', 'Clave de Incidencia', 'ID de Incidencia', 'Creada', 'Actualizada', 'Fecha Inicio Escalado', 'Fecha Fin Escalado', 'Transportista','Resuelta']
 
-
-# Cerradas
-
-# jql= "project = <proyecto> AND 'Equipo Asignado' = jsdsoportetrackingtec and status in (Done,Cerrado,Closed,Resolved) and (Resolved >= startOfMonth(-12) AND resolved <= endOfMonth(-12))"
 query_params = {'jql': jql, 'startAt': 0, 'maxResults': 1000, 'expand' :'changelog'}
 
 response = requests.get(url=JQL_PATH, headers=header_params, params=query_params, verify=False,
