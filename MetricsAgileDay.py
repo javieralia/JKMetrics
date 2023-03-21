@@ -6,7 +6,6 @@ import sys
 import csv
 import datetime
 
-# JQL_PATH = "https://axinic.central.inditex.grp/jira/rest/api/2/search"
 CONFIG_FILE = os.path.realpath("./config.txt")
 in_config_file = open (CONFIG_FILE, 'r')
 lines = in_config_file.readlines()
