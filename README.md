@@ -4,4 +4,4 @@ This utility is already integrated with a complete report in excel format that a
 # HowTo.
 1. Configure the config.txt file. Important: You have only to specify the values.
 2. Download the last version of Python.
-3. Execute from a command window. If the MetricsAgileDay.py script is at a specific path, you have to indicate after python.exe: python.exe MetricsAgileDay.py.
+3. Execute from a command window. If the MetricsAgileDay.py script is at a specific path, you have to indicate the path after python.exe: python.exe MetricsAgileDay.py.
