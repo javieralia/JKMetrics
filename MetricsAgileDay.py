@@ -18,7 +18,7 @@ JQL_PATH = lines[2].strip()
 jql = lines[3].strip()
 
 header_params = {"Content-Type": "application/json"}
-header = ['Tipo de incidencia','Tipo de Trabajo','Clase de Servicio','Estado', 'Clave de Incidencia', 'ID de Incidencia', 'Creada', 'Actualizada', 'Fecha Inicio Escalado', 'Fecha Fin Escalado', 'Transportista','Resuelta']
+header = ['Tipo de incidencia','Clase de Servicio','Estado', 'Clave de Incidencia', 'ID de Incidencia', 'Creada', 'Resuelta']
 
 query_params = {'jql': jql, 'startAt': 0, 'maxResults': 1000, 'expand' :'changelog'}
 
@@ -41,27 +41,9 @@ if response.status_code == 200:
                     TipoIssue=issue.get("fields").get("issuetype").get("name")
                     Prioridad = issue.get("fields").get("priority").get("name")
                     Estado=str(issue.get("fields").get("status").get("name"))
-                    if issue.get("fields").get("customfield_24960") is not None:
-                        Sintoma1=issue.get("fields").get("customfield_24960").get("value") #tipo de servicio
-                    if issue.get("fields").get("customfield_24961") is not None:
-                        Sintoma2=issue.get("fields").get("customfield_24961").get("value")#tipo de servicio
-                    TServicio=Sintoma1 + "-" + Sintoma2
                     if issue.get("fields").get("resolutiondate") is not None:
                         FechaResolucion= issue.get("fields").get("resolutiondate")[0:10]
-                    if issue.get("fields").get("customfield_18963") is not None:
-                        transportista=issue.get("fields").get("customfield_18963")
-
-                    transiciones = issue.get("changelog").get("histories")
-                    for transicion in transiciones:
-                        for i in range(len(transicion.get("items"))):
-                            if transicion.get("items")[i].get("field")=="status":
-                                estadoanterior = transicion.get("items")[i].get("fromString")
-                                estadoactual = transicion.get("items")[i].get("toString")
-                                if estadoactual=="Escalado":
-                                    fechainicioescalado=transicion.get("created")[0:10]
-                                if estadoanterior=="Escalado":
-                                    fechafinescalado=transicion.get("created")[0:10]
-                    write.writerow({'Tipo de incidencia':TipoIssue, 'Tipo de Trabajo': TServicio ,'Clase de Servicio':Prioridad ,'Estado':Estado, 'Clave de Incidencia' : Clave,'ID de Incidencia':IdJira, 'Creada':FechaCreacion, 'Actualizada':Actualizada,'Fecha Inicio Escalado':fechainicioescalado,'Fecha Fin Escalado':fechafinescalado, 'Transportista':transportista, 'Resuelta':FechaResolucion})
+                    write.writerow({'Tipo de incidencia':TipoIssue, 'Clase de Servicio':Prioridad ,'Estado':Estado, 'Clave de Incidencia' : Clave,'ID de Incidencia':IdJira, 'Creada':FechaCreacion, 'Resuelta':FechaResolucion})
             else:
                 print("Ha ocurrido un error o no hay issues en este momento")
         except : 
