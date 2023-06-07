@@ -32,7 +32,7 @@ if response.status_code == 200:
         try:
             if issues:
                 write = csv.DictWriter(file,fieldnames=header)
-                #write.writeheader()
+                write.writeheader()
                 for issue in issues:
                     fechainiciopriorizacion=fechainicioready=equipoescalado=estadoanterior=estadoactual=fechainicioescalado=fechafinescalado=transportista=""
                     Clave = str(issue.get("key"))
